@@ -1,0 +1,689 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pritha Ghosh | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --primary: #6a38ad;
+    --secondary: #2fb3d3;
+    --accent: #ff699c;
+    --card-bg-light: rgba(255,255,255,0.9);
+    --card-bg-dark: #272742;
+    --dark-bg: #121221;
+    --text-dark: #26243a;
+    --text-light: #f5f4fb;
+    --footer-highlight: #f2e538;
+  }
+  body {
+    margin: 0;
+    font-family: 'Montserrat', Arial, sans-serif;
+    color: var(--text-dark);
+    background:
+      linear-gradient(90deg, rgba(106,56,173,0.14) 25%, transparent 25%),
+      linear-gradient(90deg, transparent 75%, rgba(47,179,211,0.14) 75%);
+    background-size: 60px 60px;
+    background-color: var(--dark-bg);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 0.5s, color 0.5s;
+    position: relative;
+  }
+  body.light-mode {
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 78%, var(--accent) 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 18s ease-in-out infinite;
+    color: var(--text-dark);
+  }
+  @keyframes gradientShift {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+
+  body.dark-mode {
+    background-color: var(--dark-bg);
+    color: var(--text-light);
+  }
+  /* Floating shapes */
+  .floating-shape {
+    position: fixed;
+    background: rgba(255,255,255,0.12);
+    filter: blur(6px);
+    border-radius: 50%;
+    z-index: 0;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-name: floatX;
+  }
+  @keyframes floatX {
+    0% {transform: translateX(-150px);}
+    100% {transform: translateX(120vw);}
+  }
+  #shape1 {
+    width: 120px; height: 120px;
+    top: 15vh; left: -160px;
+    animation-duration: 38s;
+  }
+  #shape2 {
+    width: 190px; height: 190px;
+    top: 62vh; left: -180px;
+    animation-duration: 45s;
+    animation-delay: 15s;
+    border-radius: 20px 80px 50px 90px / 70% 40% 80% 50%;
+  }
+  #shape3 {
+    width: 75px; height: 75px;
+    top: 8vh; left: -90px;
+    animation-duration: 31s;
+    animation-delay: 3s;
+  }
+  body.dark-mode .floating-shape {
+    opacity: 0.1;
+  }
+  /* Container */
+  .container {
+    max-width: 900px;
+    margin: 55px auto 60px;
+    padding: 0 15px;
+    position: relative;
+    z-index: 1;
+  }
+  /* Nav */
+  nav {
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 4px 15px rgba(185,134,243,0.1);
+    backdrop-filter: blur(12px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 38px 14px 38px;
+    z-index: 100;
+    transition: background-color 0.5s;
+  }
+  body.light-mode nav {
+    background: rgba(255,255,255,0.85);
+  }
+  body.dark-mode nav {
+    background: rgba(20,20,40,0.85);
+    box-shadow: 0 4px 20px rgba(72,56,148,0.7);
+  }
+  .nav-title {
+    font-weight: 700;
+    font-size: 1.7rem;
+    color: var(--primary);
+    letter-spacing: 1.1px;
+    user-select: none;
+  }
+  body.dark-mode .nav-title {
+    color: var(--accent);
+  }
+  body.light-mode .nav-title {
+    color: var(--primary);
+  }
+  .nav-links a {
+    font-weight: 700;
+    color: #ff82ad;
+    margin: 0 18px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    cursor: pointer;
+    user-select:none;
+  }
+  body.light-mode .nav-links a:hover,
+  body.light-mode .nav-links a:focus-visible {
+    color: var(--primary);
+    outline: none;
+  }
+  body.dark-mode .nav-links a {
+    color: #ff82ad;
+  }
+  body.dark-mode .nav-links a:hover,
+  body.dark-mode .nav-links a:focus-visible {
+    color: #dd67a0;
+    outline: none;
+  }
+  /* Theme toggle */
+  .theme-btn {
+    background: transparent;
+    border-radius: 23px;
+    width: 48px;
+    height: 28px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s, border-color 0.3s;
+    user-select: none;
+    border: 2px solid var(--primary);
+  }
+  body.dark-mode .theme-btn {
+    border-color: var(--accent);
+  }
+  .theme-btn::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    background: var(--primary);
+    border-radius: 50%;
+    transition: left 0.3s, background 0.3s;
+  }
+  body.dark-mode .theme-btn::before {
+    background: var(--accent);
+    left: 23px;
+  }
+  body.light-mode .theme-btn::before {
+    background: var(--primary);
+    left: 3px;
+  }
+  .theme-btn:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+  }
+  /* Glass cards */
+  .glass-card {
+    background: var(--card-bg-light);
+    padding: 38px 32px 36px;
+    border-radius: 24px;
+    box-shadow: 0 10px 35px rgba(190, 160, 250, 0.25);
+    backdrop-filter: blur(18px);
+    margin-bottom: 40px;
+    color: var(--text-dark);
+    transition: background-color 0.5s, color 0.5s;
+    cursor: pointer;
+  }
+  body.dark-mode .glass-card {
+    background: var(--card-bg-dark);
+    box-shadow: 0 8px 40px rgba(103, 74, 227, 0.50);
+    color: var(--text-light);
+  }
+  #about:hover, #about:focus-within,
+  #skills:hover, #skills:focus-within {
+    background-color: rgba(143, 99, 235, 0.75);
+    box-shadow: 0 14px 60px rgba(143, 99, 235, 1);
+    outline: none;
+  }
+  /* Headings */
+  h1, h2 {
+    margin-top: 0;
+    font-weight: 700;
+    user-select:none;
+  }
+  h1 {
+    font-size: 2.6rem;
+    text-align: center;
+  }
+  h2 {
+    font-size: 1.4rem;
+    color: var(--accent);
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  h2:hover, h2:focus {
+    color: var(--primary);
+    outline: none;
+  }
+  /* Avatar */
+  .avatar-container {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 50%;
+    margin: 0 auto 25px auto;
+    box-shadow: 0 0 22px var(--accent);
+    display: grid;
+    place-items: center;
+    color: white;
+    font-size: 3rem;
+    font-weight: 700;
+    user-select: none;
+  }
+  /* Skills */
+  .skills-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .skill-tag {
+    display: inline-block;
+    background: linear-gradient(120deg, #6a38ad 35%, #2fb3d3 95%);
+    color: white;
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    box-shadow: 0 3px 15px rgba(102, 54, 168, 0.7);
+    cursor: default;
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .skill-tag:hover,
+  .skill-tag:focus-visible {
+    background: linear-gradient(120deg, #ce33a0 30%, #ff699c 95%);
+    box-shadow: 0 6px 30px rgba(255, 105, 170, 0.75);
+    transform: scale(1.07);
+    outline: none;
+  }
+  /* Projects */
+  #projects > div {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+    gap: 22px;
+  }
+  .project-card {
+    background: rgba(255,255,255,0.9);
+    padding: 22px 26px;
+    border-radius: 16px;
+    box-shadow: 0 6px 24px rgba(165,118,224,0.28);
+    color: var(--text-dark);
+    cursor: pointer;
+    user-select: none;
+    border: 1.2px solid transparent;
+    transition: transform 0.25s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .project-card:hover,
+  .project-card:focus-visible {
+    transform: translateY(-7px) scale(1.05);
+    box-shadow: 0 17px 52px #b738d233;
+    border-color: var(--primary);
+    outline: none;
+    z-index: 10;
+  }
+  body.dark-mode .project-card {
+    background: rgba(60,40,110,0.9);
+    color: var(--text-light);
+    box-shadow: 0 6px 30px #9b59ffcc;
+    border-color: transparent;
+  }
+  .project-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 7px;
+    color: var(--secondary);
+    transition: color 0.5s;
+  }
+  body.dark-mode .project-title {
+    color: var(--accent);
+  }
+  .project-tech {
+    font-size: 1rem;
+    color: var(--primary);
+    margin-bottom: 12px;
+    transition: color 0.5s;
+  }
+  body.dark-mode .project-tech {
+    color: #c9a4ff;
+  }
+  .project-desc {
+    font-size: 1rem;
+    line-height: 1.35;
+    color: #3b375c;
+    transition: color 0.5s;
+  }
+  body.dark-mode .project-desc {
+    color: #d2cadf;
+  }
+  /* Contact */
+  .contacts-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  .contact-card {
+    background: rgba(255,255,255,0.92);
+    border-radius: 18px;
+    box-shadow: 0 6px 25px rgba(183,109,246,0.2);
+    padding: 16px 24px;
+    min-width: 170px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--primary);
+    user-select: none;
+    border: 1.5px solid transparent;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  }
+  .contact-card a {
+    color: var(--secondary);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.3s;
+  }
+  .contact-card:hover, .contact-card:focus-within {
+    background-color: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .contact-card:hover a, .contact-card:focus-within a {
+    color: #fff;
+  }
+  body.dark-mode .contact-card {
+    background: rgba(72,42,144,0.8);
+    color: var(--accent);
+    box-shadow: 0 6px 25px #cd9cff96;
+  }
+  body.dark-mode .contact-card:hover, body.dark-mode .contact-card:focus-within {
+    background-color: #ff669b;
+    color: #401b24;
+    border-color: #ff669b;
+    box-shadow: 0 9px 30px #ff699bb4;
+  }
+  /* Contact form */
+  .contact-form {
+    max-width: 370px;
+    margin: 0 auto 15px;
+    background-color: var(--card-bg-light);
+    border-radius: 14px;
+    box-shadow: 0 5px 30px rgba(170,120,250,0.3);
+    padding: 22px 24px;
+    color: var(--text-dark);
+    font-size: 1rem;
+    transition: background-color 0.5s, color 0.5s;
+  }
+  body.dark-mode .contact-form {
+    background-color: var(--card-bg-dark);
+    color: var(--text-light);
+    box-shadow: 0 5px 30px rgba(130,80,255,0.6);
+  }
+  .contact-form input,
+  .contact-form textarea {
+    width: 96%;
+    padding: 11px 15px;
+    margin-bottom: 14px;
+    border-radius: 8px;
+    border: 1.5px solid #999;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 1rem;
+    background: white;
+    color: var(--text-dark);
+    transition: background-color 0.3s,color 0.3s,border-color 0.3s;
+  }
+  body.dark-mode .contact-form input,
+  body.dark-mode .contact-form textarea {
+    background: #543dbd;
+    border-color: #bb99ff;
+    color: var(--text-light);
+  }
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder {
+    color: #888;
+  }
+  body.dark-mode .contact-form input::placeholder,
+  body.dark-mode .contact-form textarea::placeholder {
+    color: #c8bbff;
+  }
+  .contact-form button {
+    background-color: var(--accent);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 700;
+    font-family: 'Montserrat', Arial, sans-serif;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 12px 28px;
+    user-select:none;
+    transition: background-color 0.3s;
+  }
+  .contact-form button:hover,
+  .contact-form button:focus-visible {
+    background-color: var(--primary);
+    outline: none;
+  }
+  #formMsg {
+    text-align: center;
+    margin-top: 9px;
+    font-weight: 600;
+    color: var(--primary);
+    user-select:none;
+    letter-spacing: 0.4px;
+  }
+  body.dark-mode #formMsg {
+    color: var(--accent);
+  }
+  .thank-you-msg {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #ff7f50;
+    user-select: none;
+    padding: 14px 12px 0 12px;
+  }
+  body.dark-mode .thank-you-msg {
+    color: gold;
+  }
+  .footer {
+    text-align: center;
+    padding: 24px 12px 20px 12px;
+    font-size: 1.12rem;
+    user-select: none;
+    transition: color 0.3s;
+    color: var(--footer-highlight);
+  }
+  body.dark-mode .footer {
+    color: var(--footer-highlight);
+  }
+  @media (max-width: 768px) {
+    #projects > div {
+      grid-template-columns: repeat(auto-fit,minmax(100%, 1fr));
+    }
+    .project-card {
+      width: 100% !important;
+      margin-bottom: 20px !important;
+    }
+  }
+  @media (max-width: 480px) {
+    nav {
+      flex-direction: column;
+      text-align: center;
+    }
+    .nav-links {
+      margin-top: 10px;
+    }
+  }
+</style>
+</head>
+<body class="light-mode">
+  <!-- Floating moving shapes behind content -->
+  <div class="floating-shape" id="shape1"></div>
+  <div class="floating-shape" id="shape2"></div>
+  <div class="floating-shape" id="shape3"></div>
+  <nav>
+    <div class="nav-title" tabindex="0">Pritha Ghosh</div>
+    <div class="nav-links">
+      <a href="#about" tabindex="0">About</a>
+      <a href="#education" tabindex="0">Education</a>
+      <a href="#skills" tabindex="0">Skills</a>
+      <a href="#projects" tabindex="0">Projects</a>
+      <a href="#writing" tabindex="0">Writings</a>
+      <a href="#contact" tabindex="0">Contact</a>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle light/dark mode" aria-pressed="false"></button>
+  </nav>
+  
+  <main class="container" role="main">
+    <section id="about" class="glass-card" tabindex="-1" aria-label="About">
+      <div class="avatar-container" aria-hidden="true">PG</div>
+      <h1>Pritha Ghosh</h1>
+      <p class="about-msg">Hi, I'm Pritha — always curious, passionate about coding, and eager to create solutions that matter.<br>“Let’s connect, build, and grow together!” 🌟</p>
+      <p class="info">Based in Howrah, West Bengal</p>
+    </section>
+  
+    <section id="education" class="glass-card" tabindex="-1" aria-label="Education">
+      <h2>Education</h2>
+      <ul>
+        <li><b>BCA:</b> Pursuing Bachelor of Computer Applications</li>
+        <li><b>Schooling:</b> Julien Day School (ICSE Board)</li>
+      </ul>
+    </section>
+  
+    <section id="skills" class="glass-card" tabindex="-1" aria-label="Skills and Technologies">
+      <h2>Skills &amp; Technologies</h2>
+      <div class="skills-flex" aria-live="polite">
+        <span class="skill-tag" tabindex="0">OOPs</span>
+        <span class="skill-tag" tabindex="0">Java</span>
+        <span class="skill-tag" tabindex="0">C++</span>
+        <span class="skill-tag" tabindex="0">Python</span>
+        <span class="skill-tag" tabindex="0">Operating Systems</span>
+        <span class="skill-tag" tabindex="0">DBMS</span>
+        <span class="skill-tag" tabindex="0">MySQL</span>
+        <span class="skill-tag" tabindex="0">HTML</span>
+        <span class="skill-tag" tabindex="0">CSS</span>
+        <span class="skill-tag" tabindex="0">JavaScript</span>
+        <span class="skill-tag" tabindex="0">Git &amp; GitHub</span>
+        <span class="skill-tag" tabindex="0">Data Structures</span>
+        <span class="skill-tag" tabindex="0">Teamwork &amp; Communication</span>
+      </div>
+      <p style="text-align:center; color:#666; max-width: 580px; margin:auto;">
+        These represent my core competencies and continuously evolving skills in software development, programming languages, and teamwork.
+      </p>
+    </section>
+  
+    <section id="projects" class="glass-card" tabindex="-1" aria-label="Projects">
+      <h2>Projects</h2>
+      <div id="projectsGrid">
+        <div class="project-card" tabindex="0" role="button" aria-pressed="false" aria-label="Student Management System project"
+             onclick="showModal('Student Management System', 'A complete portal to manage students, assignments, grades and attendance efficiently and securely. Technologies: Java, OOP, MySQL.')"
+             onkeydown="if(event.key==='Enter') showModal('Student Management System', 'A complete portal to manage students, assignments, grades and attendance efficiently and securely. Technologies: Java, OOP, MySQL.')">
+          <div class="project-title">Student Management System</div>
+          <div class="project-tech">Java, OOP, MySQL</div>
+          <div class="project-desc">Portal to streamline admin, students, grades & attendance.</div>
+        </div>
+        <div class="project-card" tabindex="0" role="button" aria-pressed="false" aria-label="Weather App project"
+             onclick="showModal('Weather App', 'Weather app using JavaScript & OpenWeather API. Shows current data, icons, and location-based weather.')"
+             onkeydown="if(event.key==='Enter') showModal('Weather App', 'Weather app using JavaScript & OpenWeather API. Shows current data, icons, and location-based weather.')">
+          <div class="project-title">Weather App</div>
+          <div class="project-tech">JavaScript, API</div>
+          <div class="project-desc">Live weather updates with elegant UI.</div>
+        </div>
+        <div class="project-card" tabindex="0" role="button" aria-pressed="false" aria-label="Portfolio Website project"
+             onclick="showModal('Portfolio Website', 'This stunning personal website showcases my journey, skills, and passion for tech. Built with HTML, CSS, JS and deployed online.')"
+             onkeydown="if(event.key==='Enter') showModal('Portfolio Website', 'This stunning personal website showcases my journey, skills, and passion for tech. Built with HTML, CSS, JS and deployed online.')">
+          <div class="project-title">Portfolio Website</div>
+          <div class="project-tech">HTML, CSS, JS</div>
+          <div class="project-desc">My digital journey and achievements.</div>
+        </div>
+        <div class="project-card" tabindex="0" role="button" aria-pressed="false" aria-label="Simple Calculator project"
+             onclick="showModal('Simple Calculator', 'Command-line calculator for basic arithmetic — fast & handy. Technologies: C++.')"
+             onkeydown="if(event.key==='Enter') showModal('Simple Calculator', 'Command-line calculator for basic arithmetic — fast & handy. Technologies: C++.')">
+          <div class="project-title">Simple Calculator</div>
+          <div class="project-tech">C++</div>
+          <div class="project-desc">Command-line maths utility.</div>
+        </div>
+      </div>
+    </section>
+  
+    <section id="contact" class="glass-card" tabindex="-1" aria-label="Contact & Social">
+      <h2>Contact &amp; Social</h2>
+      <div class="contacts-flex">
+        <div class="contact-card">
+          📧 <a href="mailto:ghoshpritha52@gmail.com" aria-label="Email Pritha Ghosh">ghoshpritha52@gmail.com</a>
+        </div>
+        <div class="contact-card">
+          💼 <a href="https://linkedin.com/in/prithaghosh16" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile of Pritha Ghosh">linkedin.com/in/prithaghosh16</a>
+        </div>
+        <div class="contact-card">
+          🐙 <a href="https://github.com/Pritha-hash" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile of Pritha Ghosh">github.com/Pritha-hash</a>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="return sendMessage(event)">
+        <input type="text" placeholder="Your Name" required aria-required="true" />
+        <input type="email" placeholder="Your Email" required aria-required="true" />
+        <textarea rows="4" placeholder="Your Message" required aria-required="true"></textarea>
+        <button type="submit">Send Message</button>
+        <div id="formMsg" role="alert" aria-live="polite"></div>
+      </form>
+    </section>
+  
+    <div class="thank-you-msg" aria-live="polite" aria-atomic="true" tabindex="-1" style="margin-top: 30px;">
+      Thank you for visiting my portfolio!
+    </div>
+  </main>
+  
+  <footer class="footer" tabindex="0">
+    &copy; 2025 Pritha Ghosh • Empower. Inspire. Connect.
+  </footer>
+  
+  <!-- Modal -->
+  <div class="modal-bg" id="modalBg" tabindex="-1" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index: 200;">
+    <div class="modal" id="modal" tabindex="0" aria-label="Project details modal" style="background: var(--card-bg-light); border-radius: 12px; padding: 20px; max-width: 400px; box-shadow: 0 0 25px rgba(0,0,0,0.5); color: var(--text-dark);">
+      <button class="close-btn" aria-label="Close modal" onclick="closeModal()" style="float:right; font-size:24px; border:none; background:none; cursor:pointer;">×</button>
+      <div id="modalTitle" style="font-size:1.25rem; font-weight:700; margin-bottom:12px;"></div>
+      <div id="modalDesc" style="font-size:1rem;"></div>
+    </div>
+  </div>
+  
+  <script>
+    (() => {
+      const shapes = [...document.querySelectorAll('.floating-shape')];
+      shapes.forEach(s => s.style.animationDuration = (25 + Math.random() * 20) + 's');
+    })();
+  
+    const fadeEls = document.querySelectorAll('.glass-card, .footer, .thank-you-msg');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, {threshold: 0.23});
+    fadeEls.forEach(el => observer.observe(el));
+  
+    function showModal(title, desc) {
+      const modalBg = document.getElementById('modalBg');
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalDesc').textContent = desc;
+      modalBg.style.display = 'flex';
+      modalBg.setAttribute('aria-hidden', 'false');
+      modalBg.focus();
+    }
+  
+    function closeModal() {
+      const modalBg = document.getElementById('modalBg');
+      modalBg.style.display = 'none';
+      modalBg.setAttribute('aria-hidden', 'true');
+    }
+  
+    document.getElementById('modalBg').addEventListener('click', e => {
+      if (e.target === e.currentTarget) closeModal();
+    });
+  
+    window.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && document.getElementById('modalBg').style.display === 'flex') closeModal();
+    });
+  
+    const themeBtn = document.getElementById('themeBtn');
+    themeBtn.addEventListener('click', () => {
+      if(document.body.classList.contains('dark-mode')) {
+        document.body.classList.replace('dark-mode', 'light-mode');
+        themeBtn.setAttribute('aria-pressed', 'false');
+      } else {
+        document.body.classList.replace('light-mode', 'dark-mode');
+        themeBtn.setAttribute('aria-pressed', 'true');
+      }
+    });
+  
+    if (!document.body.classList.contains('dark-mode') && !document.body.classList.contains('light-mode')) {
+      document.body.classList.add('light-mode');
+    }
+  
+    function sendMessage(e) {
+      e.preventDefault();
+      const msgDiv = document.getElementById('formMsg');
+      const accent = getComputedStyle(document.documentElement).getPropertyValue(document.body.classList.contains('dark-mode') ? '--accent' : '--primary');
+      msgDiv.style.color = accent;
+      msgDiv.textContent = "Thank you for your message!";
+      setTimeout(() => { msgDiv.textContent = ""; }, 3500);
+      e.target.reset();
+      return false;
+    }
+  </script>
+</body>
+</html>
